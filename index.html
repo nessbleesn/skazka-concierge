@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Консьерж-Сервис «Сказка» — частное посещение парка</title>
+<meta name="description" content="Консьерж-Сервис парка «Сказка»: персональное сопровождение, проход без очередей ко всем аттракционам, игры, фотосессия, контакт с животными и ужин в ресторане. Всё включено для компании до четырёх гостей.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0a08;
+  --bg-2:#100d0a;
+  --ink:#f1eadd;
+  --ink-dim:#cdc3b3;
+  --muted:#a99e8c;
+  --muted-2:#7c7263;
+  --gold:#c2a36b;
+  --gold-2:#e6cf9c;
+  --gold-soft:rgba(194,163,107,.10);
+  --line:rgba(194,163,107,.24);
+  --line-soft:rgba(241,234,221,.09);
+  --glass:rgba(255,255,255,.025);
+  --display:'Cormorant','Playfair Display',Georgia,serif;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Manrope',-apple-system,Segoe UI,Roboto,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+/* animated fairy-dust backdrop */
+#fx{position:fixed;inset:0;z-index:0;pointer-events:none;display:block}
+footer,section{position:relative;z-index:1}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-weight:400;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  letter-spacing:.005em;
+}
+.wrap{max-width:1200px;margin:0 auto;padding:0 40px}
+@media(max-width:600px){.wrap{padding:0 24px}}
+
+/* decorative inset frame — old-money motif */
+.frame{position:fixed;inset:16px;border:1px solid var(--line);z-index:90;pointer-events:none}
+.frame::before,.frame::after{content:"";position:absolute;width:14px;height:14px;border:1px solid var(--gold)}
+.frame::before{top:-1px;left:-1px;border-right:none;border-bottom:none}
+.frame::after{bottom:-1px;right:-1px;border-left:none;border-top:none}
+@media(max-width:600px){.frame{inset:10px}}
+
+/* micro label */
+.eyebrow{font-family:var(--sans);font-size:11.5px;letter-spacing:.42em;text-transform:uppercase;
+  color:var(--gold);font-weight:600;display:inline-flex;align-items:center;gap:14px}
+.eyebrow::before{content:"";width:34px;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}
+.center .eyebrow::before{display:none}
+
+h2{font-family:var(--display);font-weight:500;font-size:clamp(34px,5.2vw,62px);line-height:1.06;letter-spacing:-.01em}
+h2 em{font-style:italic;color:var(--gold-2)}
+.lead{color:var(--muted);font-size:clamp(16px,1.6vw,19px);font-weight:300;max-width:600px;margin-top:24px}
+
+.btn{display:inline-flex;align-items:center;gap:12px;font-family:var(--sans);font-weight:500;
+  font-size:13px;letter-spacing:.16em;text-transform:uppercase;padding:17px 36px;cursor:pointer;
+  text-decoration:none;border:1px solid var(--gold);color:var(--gold-2);background:transparent;
+  transition:.45s cubic-bezier(.2,.7,.2,1);position:relative;overflow:hidden}
+.btn::after{content:"";position:absolute;inset:0;background:var(--gold);transform:translateY(101%);transition:.45s cubic-bezier(.2,.7,.2,1);z-index:0}
+.btn span{position:relative;z-index:1;transition:.45s}
+.btn:hover::after{transform:translateY(0)}
+.btn:hover span{color:#1a1408}
+.btn-solid{background:linear-gradient(135deg,var(--gold-2),var(--gold));color:#1a1408;border-color:transparent}
+.btn-solid span{color:#1a1408}
+.btn-solid::after{background:#fff;opacity:.16}
+
+/* ===== NAV ===== */
+header{position:fixed;top:16px;left:0;right:0;z-index:100;transition:.5s ease}
+header.scrolled{top:0;background:rgba(12,10,8,.78);backdrop-filter:blur(16px);border-bottom:1px solid var(--line-soft)}
+nav{display:flex;align-items:center;justify-content:space-between;height:74px;padding:0 40px;max-width:1200px;margin:0 auto}
+@media(max-width:600px){nav{padding:0 24px}}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--ink)}
+.brand .mark{width:40px;height:40px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;color:var(--gold)}
+.brand .mark svg{width:19px;height:19px}
+.brand b{font-family:var(--display);font-size:23px;font-weight:600;letter-spacing:.04em;line-height:1}
+.brand small{display:block;font-size:9.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-top:3px}
+.nav-links{display:flex;gap:40px}
+.nav-links a{color:var(--ink-dim);text-decoration:none;font-size:13px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;transition:.3s;position:relative}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1px;background:var(--gold);transition:.35s}
+.nav-links a:hover{color:var(--gold-2)}
+.nav-links a:hover::after{width:100%}
+.nav .btn{padding:12px 26px}
+@media(max-width:900px){.nav-links{display:none}}
+
+/* ===== HERO ===== */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:130px 0 80px}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;
+  filter:saturate(.95) contrast(1.02) brightness(1.08)}
+.hero-veil{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(130% 105% at 50% 14%,rgba(8,7,5,.20),rgba(8,7,5,.56) 72%,rgba(8,7,5,.80) 100%),
+    linear-gradient(180deg,rgba(8,7,5,.42),rgba(8,7,5,.30) 40%,rgba(8,7,5,.60) 100%),
+    linear-gradient(0deg,rgba(78,54,22,.20),transparent 46%)}
+.hero-bg .glow{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;will-change:transform;z-index:1}
+.glow.g1{width:680px;height:680px;top:-220px;right:-160px;background:radial-gradient(circle,rgba(194,163,107,.42),transparent 65%)}
+.glow.g2{width:620px;height:620px;bottom:-260px;left:-180px;background:radial-gradient(circle,rgba(122,86,42,.38),transparent 65%)}
+@media(prefers-reduced-motion:no-preference){
+  .glow.g1{animation:drift 24s ease-in-out infinite}
+  .glow.g2{animation:drift 28s ease-in-out infinite reverse}
+}
+@keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(36px,26px)}}
+.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,10,8,.2),var(--bg) 92%)}
+.grain{position:absolute;inset:0;z-index:1;opacity:.045;pointer-events:none;
+  background-image:radial-gradient(#fff .6px,transparent .6px);background-size:3px 3px}
+.hero .wrap{position:relative;z-index:2;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:12px;border:1px solid var(--line);
+  padding:9px 22px;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);
+  font-weight:600;background:var(--gold-soft);margin-bottom:40px}
+.hero h1{font-family:var(--display);font-weight:500;font-size:clamp(48px,8.5vw,108px);line-height:.98;letter-spacing:-.02em}
+.hero h1 em{font-style:italic;color:var(--gold-2);font-weight:400}
+.hero .sub{color:var(--ink-dim);font-size:clamp(16px,1.8vw,20px);font-weight:300;margin:34px auto 0;max-width:620px}
+.hero .btn{margin-top:46px}
+.hero-line{display:flex;justify-content:center;gap:0;margin-top:74px;border-top:1px solid var(--line-soft);
+  border-bottom:1px solid var(--line-soft);max-width:880px;margin-left:auto;margin-right:auto}
+.hero-line div{flex:1;padding:26px 14px;text-align:center;border-left:1px solid var(--line-soft)}
+.hero-line div:first-child{border-left:none}
+.hero-line b{display:block;font-family:var(--display);font-size:clamp(26px,3vw,38px);font-weight:500;color:var(--gold-2);line-height:1}
+.hero-line span{display:block;margin-top:8px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2)}
+@media(max-width:640px){.hero-line{flex-wrap:wrap}.hero-line div{flex:1 1 50%;border-left:none;border-bottom:1px solid var(--line-soft)}}
+
+/* ===== MANIFESTO ===== */
+.manifesto{padding:140px 0;position:relative}
+.manifesto::before{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:1100px;height:560px;max-width:90vw;pointer-events:none;
+  background:radial-gradient(circle,rgba(194,163,107,.16),transparent 64%);filter:blur(18px)}
+.m-card{position:relative;max-width:1000px;margin:0 auto;text-align:center;padding:78px 72px;
+  border:1px solid var(--line);background:linear-gradient(165deg,rgba(255,255,255,.04),rgba(255,255,255,.008));
+  backdrop-filter:blur(6px);transition:.55s cubic-bezier(.2,.7,.2,1)}
+.m-card::before,.m-card::after{content:"";position:absolute;width:20px;height:20px;border:1px solid var(--gold);transition:.55s cubic-bezier(.2,.7,.2,1)}
+.m-card::before{top:-1px;left:-1px;border-right:none;border-bottom:none}
+.m-card::after{bottom:-1px;right:-1px;border-left:none;border-top:none}
+.m-card:hover{background:linear-gradient(165deg,rgba(255,255,255,.055),rgba(255,255,255,.012))}
+.m-card:hover::before,.m-card:hover::after{width:30px;height:30px}
+.manifesto .q{font-family:var(--display);font-weight:400;font-size:clamp(25px,3.5vw,44px);
+  line-height:1.34;letter-spacing:-.005em;max-width:880px;margin:26px auto 0;color:var(--ink-dim)}
+.manifesto .q em{font-style:italic;color:var(--gold-2);font-weight:500;font-feature-settings:"swsh"}
+.manifesto .mark-c{font-family:var(--display);font-size:100px;color:var(--gold);opacity:.32;line-height:0;display:block;height:36px}
+@media(max-width:600px){.m-card{padding:54px 26px}}
+
+/* ===== SECTION SHELL ===== */
+.sec{padding:120px 0;position:relative}
+.sec-head{margin-bottom:74px}
+.sec-head.center{text-align:center;max-width:720px;margin-left:auto;margin-right:auto}
+.center .eyebrow{justify-content:center}
+
+/* INCLUDED — editorial menu */
+.menu{display:grid;grid-template-columns:1fr 1fr;gap:0 64px}
+.m-item{display:grid;grid-template-columns:auto 1fr;gap:26px;padding:30px 0;border-top:1px solid var(--line-soft);transition:.4s}
+.m-item:hover{padding-left:10px}
+.m-item .idx{font-family:var(--display);font-size:22px;font-weight:500;color:var(--gold);font-style:italic;line-height:1.2;transition:.4s}
+.m-item:hover .idx{color:var(--gold-2)}
+.m-item h4{font-family:var(--display);font-size:25px;font-weight:500;letter-spacing:.005em;margin-bottom:7px}
+.m-item p{color:var(--muted);font-size:15px;font-weight:300;line-height:1.6}
+@media(max-width:820px){.menu{grid-template-columns:1fr;gap:0}}
+
+/* ADVANTAGES — bordered grid */
+.adv-wrap{background:linear-gradient(180deg,var(--bg),var(--bg-2),var(--bg))}
+.adv{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line-soft);border-left:1px solid var(--line-soft)}
+.adv-cell{padding:46px 38px;border-right:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);transition:.45s}
+.adv-cell:hover{background:var(--gold-soft)}
+.adv-cell .n{font-family:var(--display);font-style:italic;font-size:30px;font-weight:500;color:var(--gold);opacity:.85}
+.adv-cell h4{font-family:var(--display);font-size:24px;font-weight:500;margin:18px 0 12px}
+.adv-cell p{color:var(--muted);font-size:14.5px;font-weight:300}
+@media(max-width:880px){.adv{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.adv{grid-template-columns:1fr}.adv-cell{padding:38px 28px}}
+
+/* INVITATION + form */
+.finale{position:relative;overflow:hidden;background:var(--bg-2)}
+.finale .glow{position:absolute;width:900px;height:600px;top:-260px;left:50%;transform:translateX(-50%);
+  border-radius:50%;filter:blur(90px);background:radial-gradient(circle,rgba(194,163,107,.22),transparent 65%)}
+.finale .wrap{position:relative;z-index:2}
+.invite{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);
+  background:linear-gradient(165deg,rgba(255,255,255,.03),rgba(255,255,255,.008));backdrop-filter:blur(8px)}
+.invite-left{padding:64px 56px;border-right:1px solid var(--line-soft)}
+.invite-left .eyebrow{margin-bottom:26px}
+.invite-left h3{font-family:var(--display);font-size:clamp(30px,3.4vw,44px);font-weight:500;line-height:1.1}
+.invite-left h3 em{font-style:italic;color:var(--gold-2)}
+.price{margin-top:38px;padding-top:32px;border-top:1px solid var(--line-soft)}
+.price .v{font-family:var(--display);font-size:54px;font-weight:600;color:var(--gold-2);line-height:1}
+.price .l{color:var(--muted);font-size:14px;font-weight:300;margin-top:8px}
+.invite-right{padding:56px 52px;display:flex;flex-direction:column;justify-content:center}
+.invite-right .ttl{font-family:var(--display);font-size:24px;font-weight:500;margin-bottom:6px}
+.invite-right .desc{color:var(--muted);font-size:14.5px;font-weight:300;margin-bottom:30px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.field{display:flex;flex-direction:column;gap:9px}
+.field.full{grid-column:1/-1}
+.field label{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2)}
+.field input,.field select{background:rgba(0,0,0,.25);border:none;border-bottom:1px solid var(--line-soft);
+  padding:12px 2px;color:var(--ink);font-family:var(--sans);font-size:15px;transition:.3s}
+.field input:focus,.field select:focus{outline:none;border-bottom-color:var(--gold)}
+.field input::placeholder{color:var(--muted-2)}
+.field select option{background:#161210}
+.form-grid .btn{grid-column:1/-1;justify-content:center;margin-top:14px}
+.note{color:var(--muted-2);font-size:12px;margin-top:20px;line-height:1.5}
+@media(max-width:840px){.invite{grid-template-columns:1fr}.invite-left{border-right:none;border-bottom:1px solid var(--line-soft);padding:48px 36px}.invite-right{padding:44px 36px}}
+@media(max-width:520px){.form-grid{grid-template-columns:1fr}}
+
+/* footer */
+footer{padding:60px 0 70px;border-top:1px solid var(--line-soft)}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap}
+.foot .brand b{font-size:20px}
+.foot-links{display:flex;gap:30px;flex-wrap:wrap}
+.foot-links a{color:var(--muted);text-decoration:none;font-size:12px;letter-spacing:.1em;text-transform:uppercase;transition:.3s}
+.foot-links a:hover{color:var(--gold-2)}
+.foot p{color:var(--muted-2);font-size:12.5px;letter-spacing:.04em}
+
+/* ===== hover micro-interactions ===== */
+.btn:hover{transform:translateY(-2px);box-shadow:0 16px 36px -16px rgba(194,163,107,.65)}
+.btn-solid:hover{box-shadow:0 18px 42px -14px rgba(194,163,107,.85)}
+
+.brand .mark,.brand .mark svg{transition:transform .6s cubic-bezier(.2,.7,.2,1),border-color .4s,box-shadow .4s,color .4s}
+.brand:hover .mark{transform:rotate(72deg);border-color:var(--gold-2);box-shadow:0 0 0 5px var(--gold-soft)}
+.brand:hover .mark svg{color:var(--gold-2);transform:scale(1.08)}
+.brand b{transition:color .4s}
+.brand:hover b{color:var(--gold-2)}
+
+.m-item h4{transition:color .4s}
+.m-item .idx{display:inline-block;transform-origin:left center}
+.m-item:hover{padding-left:18px;border-top-color:var(--line)}
+.m-item:hover h4{color:var(--gold-2)}
+.m-item:hover .idx{color:var(--gold-2);transform:scale(1.2)}
+
+.adv-cell .n{display:inline-block;transform-origin:left center;transition:.45s cubic-bezier(.2,.7,.2,1)}
+.adv-cell h4{transition:color .45s}
+.adv-cell:hover{box-shadow:inset 0 0 70px -22px rgba(194,163,107,.32)}
+.adv-cell:hover .n{transform:scale(1.22);opacity:1;color:var(--gold-2)}
+.adv-cell:hover h4{color:var(--gold-2)}
+
+.hero-line div{transition:background .4s}
+.hero-line b{transition:transform .45s cubic-bezier(.2,.7,.2,1),color .4s}
+.hero-line div:hover{background:var(--gold-soft)}
+.hero-line div:hover b{transform:scale(1.12);color:#f3e4bf}
+
+.field input:hover,.field select:hover{border-bottom-color:var(--muted)}
+
+.foot-links a{position:relative}
+.foot-links a::after{content:"";position:absolute;left:0;bottom:-4px;width:0;height:1px;background:var(--gold);transition:.35s}
+.foot-links a:hover::after{width:100%}
+
+@media(prefers-reduced-motion:reduce){
+  .btn:hover,.brand:hover .mark,.brand:hover .mark svg,.m-item:hover .idx,
+  .adv-cell:hover .n,.hero-line div:hover b{transform:none}
+}
+
+/* tap feedback on touch screens (no :hover on phones) */
+.btn:active{transform:translateY(0) scale(.97)}
+.brand:active .mark{transform:rotate(72deg);border-color:var(--gold-2);box-shadow:0 0 0 5px var(--gold-soft)}
+.m-item:active{padding-left:18px}
+.m-item:active h4,.m-item:active .idx{color:var(--gold-2)}
+.m-item:active .idx{transform:scale(1.2)}
+.adv-cell:active{background:var(--gold-soft);box-shadow:inset 0 0 70px -22px rgba(194,163,107,.32)}
+.adv-cell:active .n{transform:scale(1.22);color:var(--gold-2);opacity:1}
+.adv-cell:active h4{color:var(--gold-2)}
+.hero-line div:active{background:var(--gold-soft)}
+.hero-line div:active b{transform:scale(1.12);color:#f3e4bf}
+.m-card:active::before,.m-card:active::after{width:30px;height:30px}
+.nav-links a:active::after,.foot-links a:active::after{width:100%}
+@media(prefers-reduced-motion:reduce){
+  .btn:active,.brand:active .mark,.m-item:active .idx,.adv-cell:active .n,.hero-line div:active b{transform:none}
+}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(30px);transition:1s cubic-bezier(.16,.8,.24,1)}
+.reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+<canvas id="fx"></canvas>
+<div class="frame"></div>
+
+<header id="hd">
+  <nav>
+    <a href="#top" class="brand">
+      <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2l2.4 6.9H22l-6 4.5 2.3 7L12 16.6 5.7 20.4 8 13.4 2 8.9h7.6L12 2z" stroke-linejoin="round"/></svg></span>
+      <span><b>Сказка</b><small>Консьерж-Сервис</small></span>
+    </a>
+    <div class="nav-links">
+      <a href="#about">О сервисе</a>
+      <a href="#included">Что входит</a>
+      <a href="#why">Преимущества</a>
+    </div>
+    <a href="#book" class="btn"><span>Забронировать</span></a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-bg">
+    <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="poster.jpg">
+      <source src="hero.mp4" type="video/mp4">
+    </video>
+    <div class="glow g1"></div><div class="glow g2"></div>
+    <div class="hero-veil"></div>
+  </div>
+  <div class="grain"></div>
+  <div class="wrap">
+    <span class="hero-badge">Премиальное посещение · парк «Сказка»</span>
+    <h1>Весь парк —<br><em>без единой очереди</em></h1>
+    <p class="sub">Частное посещение по принципу «всё включено» для компании до четырёх гостей. Личное сопровождение, проход первыми ко всем аттракционам и день впечатлений, продуманный до мелочей.</p>
+    <a href="#book" class="btn btn-solid"><span>Забронировать визит</span></a>
+    <div class="hero-line">
+      <div><b>5</b><span>часов свободно</span></div>
+      <div><b>80</b><span>аттракционов</span></div>
+      <div><b>до 4</b><span>гостей</span></div>
+      <div><b>100 000 ₽</b><span>за визит</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<section class="manifesto" id="about">
+  <div class="wrap">
+    <div class="m-card">
+      <span class="mark-c">”</span>
+      <p class="q"><em>Никаких очередей и расписаний.</em> Только ваша семья, личная команда сопровождения и <em>пять часов</em> впечатлений — от игр и фотосессии до контакта с животными и ужина в ресторане.</p>
+    </div>
+  </div>
+</section>
+
+<!-- INCLUDED -->
+<section class="sec" id="included">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow reveal">Состав визита</span>
+      <h2 class="reveal" style="margin-top:18px">Всё включено —<br><em>без доплат на месте</em></h2>
+    </div>
+    <div class="menu">
+      <div class="m-item reveal"><span class="idx">01</span><div><h4>Персональное сопровождение</h4><p>Два опытных оператора ведут вашу семью весь визит и берут на себя любую заботу.</p></div></div>
+      <div class="m-item reveal"><span class="idx">02</span><div><h4>Приоритетный проход</h4><p>Все 80 аттракционов и локаций; вы проходите самыми первыми — никого вперёд.</p></div></div>
+      <div class="m-item reveal"><span class="idx">03</span><div><h4>Тир и аркады</h4><p>Восемь игр — по две на гостя — с гарантированным утешительным призом.</p></div></div>
+      <div class="m-item reveal"><span class="idx">04</span><div><h4>Фотосессия</h4><p>Четыре кадра с фотоловушек на аттракционах останутся с вами на память.</p></div></div>
+      <div class="m-item reveal"><span class="idx">05</span><div><h4>Контакт с животными</h4><p>Корм для альпак и верблюда, для птиц и обитателей зоопарка.</p></div></div>
+      <div class="m-item reveal"><span class="idx">06</span><div><h4>Тематические экскурсии</h4><p>Альпака, Дино и Авиарий — три маршрута по самым ярким уголкам парка.</p></div></div>
+      <div class="m-item reveal"><span class="idx">07</span><div><h4>Ресторан «Базилика»</h4><p>Забронированный столик, отдельный официант и заказ, поданный точно ко времени.</p></div></div>
+      <div class="m-item reveal"><span class="idx">08</span><div><h4>Парковка и маршрут</h4><p>Бесплатная парковка и несколько сценариев программы визита на выбор.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ADVANTAGES -->
+<section class="sec adv-wrap" id="why">
+  <div class="wrap">
+    <div class="sec-head center">
+      <span class="eyebrow reveal">Преимущества</span>
+      <h2 class="reveal" style="margin-top:18px">Почему <em>«Сказка»</em></h2>
+      <p class="lead reveal" style="margin:22px auto 0;text-align:center">Сервис, который заметен в деталях.</p>
+    </div>
+    <div class="adv reveal">
+      <div class="adv-cell"><div class="n">01</div><h4>Всё в одном визите</h4><p>Игры, фотосессия, животные и гастрономия включены — а не только проход и катания.</p></div>
+      <div class="adv-cell"><div class="n">02</div><h4>Время без рамок</h4><p>Пять часов без привязки к сеансам — вы гуляете в собственном ритме.</p></div>
+      <div class="adv-cell"><div class="n">03</div><h4>Двойная забота</h4><p>Два сопровождающих внимательны к каждому — и к взрослым, и к детям.</p></div>
+      <div class="adv-cell"><div class="n">04</div><h4>Масштаб парка</h4><p>Доступ ко всем 80 аттракционам, а не к ограниченному набору активностей.</p></div>
+      <div class="adv-cell"><div class="n">05</div><h4>Премиум-гастрономия</h4><p>Бронь ресторана и персональный официант на самом высоком уровне сервиса.</p></div>
+      <div class="adv-cell"><div class="n">06</div><h4>Эмоция для детей</h4><p>Кормление альпак и зверей, тематические экскурсии — настоящий «вау» для ребёнка.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- INVITATION + FORM -->
+<section class="sec finale" id="book">
+  <div class="glow"></div>
+  <div class="wrap">
+    <div class="invite reveal">
+      <div class="invite-left">
+        <span class="eyebrow">Приглашение</span>
+        <h3>Один день, который<br><em>запомнится надолго</em></h3>
+        <div class="price">
+          <div class="v">100 000 ₽</div>
+          <div class="l">за компанию до четырёх гостей · +25 000 ₽ за каждого гостя сверх</div>
+        </div>
+      </div>
+      <div class="invite-right">
+        <div class="ttl">Забронировать визит</div>
+        <div class="desc">Оставьте контакты — менеджер консьерж-сервиса свяжется с вами и подберёт удобную дату.</div>
+        <form class="form-grid" onsubmit="return submitForm(event)">
+          <div class="field"><label>Имя</label><input name="name" placeholder="Ваше имя" required></div>
+          <div class="field"><label>Телефон</label><input name="phone" type="tel" placeholder="+7 (___) ___-__-__" required></div>
+          <div class="field"><label>Число гостей</label><select name="guests"><option>До 4 гостей</option><option>5 гостей</option><option>6 гостей</option><option>7+ гостей</option></select></div>
+          <div class="field"><label>Желаемая дата</label><input name="date" type="date"></div>
+          <button type="submit" class="btn btn-solid"><span>Отправить заявку</span></button>
+        </form>
+        <p class="note" id="formNote">Нажимая кнопку, вы соглашаетесь на обработку персональных данных.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <a href="#top" class="brand">
+        <span class="mark" style="width:36px;height:36px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2l2.4 6.9H22l-6 4.5 2.3 7L12 16.6 5.7 20.4 8 13.4 2 8.9h7.6L12 2z" stroke-linejoin="round"/></svg></span>
+        <span><b>Сказка</b><small>Консьерж-Сервис</small></span>
+      </a>
+      <div class="foot-links">
+        <a href="#about">О сервисе</a>
+        <a href="#included">Что входит</a>
+        <a href="#why">Преимущества</a>
+        <a href="#book">Бронирование</a>
+      </div>
+      <p>© 2026 Парк аттракционов «Сказка»</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ===== animated gold fairy-dust backdrop ===== */
+(function(){
+  const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  if(reduce)return;
+  const cv=document.getElementById('fx'),ctx=cv.getContext('2d');
+  let w,h,dpr,parts=[],raf,paused=false;
+  function resize(){
+    const mob=innerWidth<=600;                         // lighter on phones (battery/jank)
+    dpr=Math.min(devicePixelRatio||1,mob?1.5:2);
+    w=cv.width=innerWidth*dpr;h=cv.height=innerHeight*dpr;
+    cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px';
+    const target=Math.round(innerWidth*innerHeight/12000);
+    const n=Math.max(mob?42:60,Math.min(mob?74:170,target));
+    parts=[];for(let i=0;i<n;i++)parts.push(spawn(true));
+  }
+  function spawn(init){
+    const r=(Math.random()*2.4+0.9)*dpr;
+    return{
+      x:Math.random()*w,
+      y:init?Math.random()*h:h+r*4,
+      r,
+      vy:(Math.random()*0.18+0.06)*dpr,           // slow rise
+      drift:(Math.random()*0.6+0.2)*dpr,           // sway amplitude
+      ph:Math.random()*Math.PI*2,                  // sway phase
+      sp:Math.random()*0.012+0.004,                // sway speed
+      tw:Math.random()*Math.PI*2,                  // twinkle phase
+      tws:Math.random()*0.03+0.01,                 // twinkle speed
+      a:Math.random()*0.45+0.5                     // base alpha
+    };
+  }
+  function frame(){
+    ctx.clearRect(0,0,w,h);
+    ctx.globalCompositeOperation='lighter';          // additive glow → gold pops
+    for(const p of parts){
+      p.y-=p.vy;p.ph+=p.sp;p.tw+=p.tws;
+      const x=p.x+Math.sin(p.ph)*p.drift*14;
+      const alpha=p.a*(0.6+0.4*Math.sin(p.tw));
+      if(p.y< -p.r*4){Object.assign(p,spawn(false));p.x=Math.random()*w;}
+      const g=ctx.createRadialGradient(x,p.y,0,x,p.y,p.r*4.5);
+      g.addColorStop(0,'rgba(255,238,196,'+alpha+')');
+      g.addColorStop(.25,'rgba(231,200,115,'+alpha*0.7+')');
+      g.addColorStop(.6,'rgba(194,163,107,'+alpha*0.28+')');
+      g.addColorStop(1,'rgba(194,163,107,0)');
+      ctx.fillStyle=g;
+      ctx.beginPath();ctx.arc(x,p.y,p.r*4.5,0,Math.PI*2);ctx.fill();
+    }
+    ctx.globalCompositeOperation='source-over';
+    raf=requestAnimationFrame(frame);
+  }
+  function start(){if(!paused){cancelAnimationFrame(raf);frame();}}
+  function init(){cancelAnimationFrame(raf);resize();start();}
+  requestAnimationFrame(init);                 // defer until layout has dimensions
+  addEventListener('load',init);               // re-size once fully loaded (guards 0×0)
+  addEventListener('resize',init);
+  document.addEventListener('visibilitychange',()=>{
+    paused=document.hidden;
+    if(paused)cancelAnimationFrame(raf);else start();
+  });
+})();
+
+const hd=document.getElementById('hd');
+addEventListener('scroll',()=>hd.classList.toggle('scrolled',scrollY>30));
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%6*60)+'ms';io.observe(el)});
+function submitForm(e){
+  e.preventDefault();
+  const n=e.target.name.value.trim();
+  const note=document.getElementById('formNote');
+  note.textContent='Благодарим, '+(n||'гость')+'. Заявка принята — менеджер свяжется с вами в ближайшее время.';
+  note.style.color='var(--gold-2)';
+  e.target.reset();
+  return false;
+}
+</script>
+</body>
+</html>
