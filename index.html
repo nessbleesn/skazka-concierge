@@ -150,9 +150,11 @@ nav{display:flex;align-items:center;justify-content:space-between;height:74px;pa
 
 /* INCLUDED — editorial menu */
 .menu{display:grid;grid-template-columns:1fr 1fr;gap:0 64px}
-.m-item{display:grid;grid-template-columns:auto 1fr;gap:26px;padding:30px 0;border-top:1px solid var(--line-soft);transition:.4s}
-.m-item:hover{padding-left:10px}
-.m-item .idx{font-family:var(--display);font-size:22px;font-weight:500;color:var(--gold);font-style:italic;line-height:1.2;transition:.4s}
+.m-item{display:grid;grid-template-columns:auto 1fr;gap:26px;padding:30px 0;border-top:1px solid var(--line-soft);transition:border-color .4s}
+.m-item>div{transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+.m-item .idx{width:50px;height:50px;flex:none;border:1px solid var(--line);border-radius:50%;
+  display:grid;place-items:center;color:var(--gold-2);background:var(--gold-soft);transition:.4s}
+.m-item .idx svg{width:23px;height:23px}
 .m-item:hover .idx{color:var(--gold-2)}
 .m-item h4{font-family:var(--display);font-size:25px;font-weight:500;letter-spacing:.005em;margin-bottom:7px}
 .m-item p{color:var(--muted);font-size:15px;font-weight:300;line-height:1.6}
@@ -220,10 +222,11 @@ footer{padding:60px 0 70px;border-top:1px solid var(--line-soft)}
 .brand:hover b{color:var(--gold-2)}
 
 .m-item h4{transition:color .4s}
-.m-item .idx{display:inline-block;transform-origin:left center}
-.m-item:hover{padding-left:18px;border-top-color:var(--line)}
+.m-item .idx{transform-origin:center}
+.m-item:hover{border-top-color:var(--line)}
+.m-item:hover>div{transform:translateX(14px)}
 .m-item:hover h4{color:var(--gold-2)}
-.m-item:hover .idx{color:var(--gold-2);transform:scale(1.2)}
+.m-item:hover .idx{transform:translateX(14px) scale(1.1);border-color:var(--gold-2);background:rgba(194,163,107,.2)}
 
 .adv-cell .n{display:inline-block;transform-origin:left center;transition:.45s cubic-bezier(.2,.7,.2,1)}
 .adv-cell h4{transition:color .45s}
@@ -243,16 +246,16 @@ footer{padding:60px 0 70px;border-top:1px solid var(--line-soft)}
 .foot-links a:hover::after{width:100%}
 
 @media(prefers-reduced-motion:reduce){
-  .btn:hover,.brand:hover .mark,.brand:hover .mark svg,.m-item:hover .idx,
+  .btn:hover,.brand:hover .mark,.brand:hover .mark svg,.m-item:hover .idx,.m-item:hover>div,
   .adv-cell:hover .n,.hero-line div:hover b{transform:none}
 }
 
 /* tap feedback on touch screens (no :hover on phones) */
 .btn:active{transform:translateY(0) scale(.97)}
 .brand:active .mark{transform:rotate(72deg);border-color:var(--gold-2);box-shadow:0 0 0 5px var(--gold-soft)}
-.m-item:active{padding-left:18px}
+.m-item:active>div{transform:translateX(14px)}
 .m-item:active h4,.m-item:active .idx{color:var(--gold-2)}
-.m-item:active .idx{transform:scale(1.2)}
+.m-item:active .idx{transform:translateX(14px) scale(1.1)}
 .adv-cell:active{background:var(--gold-soft);box-shadow:inset 0 0 70px -22px rgba(194,163,107,.32)}
 .adv-cell:active .n{transform:scale(1.22);color:var(--gold-2);opacity:1}
 .adv-cell:active h4{color:var(--gold-2)}
@@ -261,7 +264,7 @@ footer{padding:60px 0 70px;border-top:1px solid var(--line-soft)}
 .m-card:active::before,.m-card:active::after{width:30px;height:30px}
 .nav-links a:active::after,.foot-links a:active::after{width:100%}
 @media(prefers-reduced-motion:reduce){
-  .btn:active,.brand:active .mark,.m-item:active .idx,.adv-cell:active .n,.hero-line div:active b{transform:none}
+  .btn:active,.brand:active .mark,.m-item:active .idx,.m-item:active>div,.adv-cell:active .n,.hero-line div:active b{transform:none}
 }
 
 /* reveal */
@@ -330,14 +333,14 @@ footer{padding:60px 0 70px;border-top:1px solid var(--line-soft)}
       <h2 class="reveal" style="margin-top:18px">Всё включено —<br><em>без доплат на месте</em></h2>
     </div>
     <div class="menu">
-      <div class="m-item reveal"><span class="idx">01</span><div><h4>Персональное сопровождение</h4><p>Два опытных оператора ведут вашу семью весь визит и берут на себя любую заботу.</p></div></div>
-      <div class="m-item reveal"><span class="idx">02</span><div><h4>Приоритетный проход</h4><p>Все 80 аттракционов и локаций; вы проходите самыми первыми — никого вперёд.</p></div></div>
-      <div class="m-item reveal"><span class="idx">03</span><div><h4>Тир и аркады</h4><p>Восемь игр — по две на гостя — с гарантированным утешительным призом.</p></div></div>
-      <div class="m-item reveal"><span class="idx">04</span><div><h4>Фотосессия</h4><p>Четыре кадра с фотоловушек на аттракционах останутся с вами на память.</p></div></div>
-      <div class="m-item reveal"><span class="idx">05</span><div><h4>Контакт с животными</h4><p>Корм для альпак и верблюда, для птиц и обитателей зоопарка.</p></div></div>
-      <div class="m-item reveal"><span class="idx">06</span><div><h4>Тематические экскурсии</h4><p>Альпака, Дино и Авиарий — три маршрута по самым ярким уголкам парка.</p></div></div>
-      <div class="m-item reveal"><span class="idx">07</span><div><h4>Ресторан «Базилика»</h4><p>Забронированный столик, отдельный официант и заказ, поданный точно ко времени.</p></div></div>
-      <div class="m-item reveal"><span class="idx">08</span><div><h4>Парковка и маршрут</h4><p>Бесплатная парковка и несколько сценариев программы визита на выбор.</p></div></div>
+      <div class="m-item reveal"><span class="idx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="3.2"/><path d="M5.5 20c0-3.6 3-6 6.5-6s6.5 2.4 6.5 6" stroke-linecap="round"/></svg></span><div><h4>Персональное сопровождение</h4><p>Два опытных оператора ведут вашу семью весь визит и берут на себя любую заботу.</p></div></div>
+      <div class="m-item reveal"><span class="idx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12h12M13 7l5 5-5 5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><h4>Приоритетный проход</h4><p>Все 80 аттракционов и локаций; вы проходите самыми первыми — никого вперёд.</p></div></div>
+      <div class="m-item reveal"><span class="idx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3.4"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3" stroke-linecap="round"/></svg></span><div><h4>Тир и аркады</h4><p>Восемь игр — по две на гостя — с гарантированным утешительным призом.</p></div></div>
+      <div class="m-item reveal"><span class="idx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6.5" width="18" height="13" rx="2.5"/><circle cx="12" cy="13" r="3.6"/><path d="M8 6.5l1.4-2h5L16 6.5" stroke-linejoin="round"/></svg></span><div><h4>Фотосессия</h4><p>Четыре кадра с фотоловушек на аттракционах останутся с вами на память.</p></div></div>
+      <div class="m-item reveal"><span class="idx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6.5" cy="10" r="1.6"/><circle cx="10.5" cy="7.5" r="1.6"/><circle cx="14.5" cy="7.5" r="1.6"/><circle cx="18" cy="10.5" r="1.6"/><path d="M8 16.5c0-2.2 1.8-3.5 4-3.5s4 1.3 4 3.5-1.8 3-4 3-4-.8-4-3z" stroke-linejoin="round"/></svg></span><div><h4>Контакт с животными</h4><p>Корм для альпак и верблюда, для птиц и обитателей зоопарка.</p></div></div>
+      <div class="m-item reveal"><span class="idx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="18.5" r="1.7"/><circle cx="18" cy="6.5" r="1.7"/><path d="M7.6 18.5H14c2 0 3.5-1.3 3.5-3s-1.5-3-3.5-3h-4c-2 0-3.5-1.3-3.5-3s1.5-3 3.5-3h2.9" stroke-linecap="round"/></svg></span><div><h4>Тематические экскурсии</h4><p>Альпака, Дино и Авиарий — три маршрута по самым ярким уголкам парка.</p></div></div>
+      <div class="m-item reveal"><span class="idx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 3v8M7 3v18M5 3v5a2 2 0 0 0 2 2M17 3c-1.5 0-2.4 2-2.4 4.5S15.5 12 17 12v9" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><h4>Ресторан «Базилика»</h4><p>Забронированный столик, отдельный официант и заказ, поданный точно ко времени.</p></div></div>
+      <div class="m-item reveal"><span class="idx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 16.5v-4l1.8-4.5h10.4L19 12.5v4" stroke-linejoin="round"/><path d="M4 16.5h16" stroke-linecap="round"/><circle cx="8" cy="16.5" r="1.6"/><circle cx="16" cy="16.5" r="1.6"/></svg></span><div><h4>Парковка и маршрут</h4><p>Бесплатная парковка и несколько сценариев программы визита на выбор.</p></div></div>
     </div>
   </div>
 </section>
@@ -459,10 +462,14 @@ footer{padding:60px 0 70px;border-top:1px solid var(--line-soft)}
     raf=requestAnimationFrame(frame);
   }
   function start(){if(!paused){cancelAnimationFrame(raf);frame();}}
-  function init(){cancelAnimationFrame(raf);resize();start();}
+  let lastW=0,rt;
+  function init(){lastW=innerWidth;cancelAnimationFrame(raf);resize();start();}
   requestAnimationFrame(init);                 // defer until layout has dimensions
   addEventListener('load',init);               // re-size once fully loaded (guards 0×0)
-  addEventListener('resize',init);
+  addEventListener('resize',function(){        // ignore height-only changes (mobile URL bar) — only re-init on width/orientation change
+    if(innerWidth===lastW)return;
+    lastW=innerWidth;clearTimeout(rt);rt=setTimeout(init,180);
+  });
   document.addEventListener('visibilitychange',()=>{
     paused=document.hidden;
     if(paused)cancelAnimationFrame(raf);else start();
