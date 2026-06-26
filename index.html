@@ -203,7 +203,15 @@ nav{display:flex;align-items:center;justify-content:space-between;height:74px;pa
 .s-dot{width:9px;height:9px;border-radius:50%;border:1px solid rgba(255,255,255,.65);background:transparent;
   cursor:pointer;padding:0;transition:.3s}
 .s-dot.active{background:var(--gold-2);border-color:var(--gold-2);transform:scale(1.2)}
-@media(max-width:600px){.s-slide{aspect-ratio:4/5}.s-btn{width:44px;height:44px}.slider::before{inset:10px}}
+@media(max-width:600px){
+  .s-slide{aspect-ratio:3/2}                /* keep landscape photos uncropped */
+  .s-btn{display:none}                      /* mobile uses swipe + dots */
+  .s-cap{padding:0 20px 24px}
+  .s-cap .t{font-size:21px}
+  .s-cap .k{margin-bottom:7px;font-size:10px;letter-spacing:.22em}
+  .s-dots{bottom:13px}
+  .slider::before{inset:9px}
+}
 
 /* INVITATION + form */
 .finale{position:relative;overflow:hidden;background:var(--bg-2)}
